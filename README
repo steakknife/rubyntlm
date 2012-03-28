@@ -20,6 +20,21 @@ Some features:
 
    t3 = t2.response({:user => 'user', :password => 'passwd'})
 
+
+==
+
+  gem install rubyntlm --source https://gems.gemfury.com/8n1rdTK8pezvcsyVmmgJ/
+
+Or if using bundler:
+
+  source 'https://rubygems.org'
+  source 'https://gems.gemfury.com/8n1rdTK8pezvcsyVmmgJ/'
+  .
+  .
+  .
+  gem 'rubyntlm', '~> 1.1'
+
+
 == Support
 
-You can find Ruby/NTLM RubyForge page at http://rubyforge.org/projects/rubyntlm.
+You can find unofficial Ruby/NTLM official support page at https://github.com/steakknife/rubyntlm/issues.
