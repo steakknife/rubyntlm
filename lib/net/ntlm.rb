@@ -97,21 +97,31 @@ module Net  #:nodoc:
   # module functions
     class << self
       def decode_utf16le(str)
-        Kconv.kconv(swap16(str), Kconv::ASCII, Kconv::UTF16)
+        if RUBY_VERSION < "1.9"
+          #tmp = Kconv.kconv(str.unpack("v*").pack("n*"), Kconv::ASCII, Kconv::UTF16)
+          tmp = Kconv.kconv(str.unpack("v*").pack("n*"), Kconv::UTF8, Kconv::UTF16)
+        else
+          #tmp = str.dup.force_encoding('UTF-16LE').encode('ASCII-8BIT')
+          tmp = str.dup.force_encoding('UTF-16LE').encode('UTF-8')
+        end
+        return tmp
       end
 
       def encode_utf16le(str)
-        swap16(Kconv.kconv(str, Kconv::UTF16, Kconv::ASCII))
+        if RUBY_VERSION < "1.9"
+          #tmp = Kconv.kconv(str, Kconv::UTF16, Kconv::ASCII).unpack("v*").pack("n*")
+          tmp = Kconv.kconv(str, Kconv::UTF16, Kconv::UTF8).unpack("v*").pack("n*")
+        else
+          #tmp = str.dup.force_encoding('ASCII-8BIT').encode('UTF-16LE')
+          tmp = str.dup.force_encoding('UTF-8').encode('UTF-16LE')
+        end
+        return tmp
       end
     
       def pack_int64le(val)
           [val & 0x00000000ffffffff, val >> 32].pack("V2")
       end
       
-      def swap16(str)
-        str.unpack("v*").pack("n*")
-      end
-
       def split7(str)
         s = str.dup
         until s.empty?
