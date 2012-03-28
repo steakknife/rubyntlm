@@ -51,7 +51,7 @@ module Net  #:nodoc:
   module NTLM #:nodoc:
 
     module VERSION #:nodoc:
-      MAJOR = 0
+      MAJOR = 1
       MINOR = 1
       TINY  = 2
       STRING = [MAJOR, MINOR, TINY].join('.')
